@@ -1,0 +1,92 @@
+<div class="w-full">
+    <!-- <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+        <table class="w-full" id="table">
+            <thead>
+                <tr>
+                    <th class="text-left font-semibold">Product</th>
+                    <th class="text-left font-semibold">Total</th>
+                    <th class="text-left font-semibold">Time</th>
+                    <th class="text-left font-semibold">Table</th>
+                    <th class="text-left font-semibold">Server</th>
+                    <th class="text-left font-semibold">Status</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                <% 
+                let tables = []
+                let logs = {}
+                let grandTotal = 0
+                data.sales.forEach(function(i) {
+                    grandTotal += i.Total
+                    let tableKey = i.Table
+                    if (!tables.includes(tableKey)) {
+                        tables.push(tableKey)
+                    }
+
+                    if(logs[tableKey] == null){
+                       logs[tableKey] = []
+                    }
+                    logs[tableKey].push(i)
+                })
+                %>
+                
+                <%
+                let totalItemSales = 0
+                for(let item = 0; item < tables.length; item++) {
+                    let logIndex = tables[item]
+                    %>
+                <tr>
+                    <td class="py-4">
+                        <div class="flex items-center">
+                            <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Product image">
+                            <span class="font-semibold flex-col flex">
+                            <span class="font-semibold"><%=logs[logIndex][0].Name%></span>
+                            <span class="font-normal"><%=logs[logIndex].length%> total items</span>
+                            </span>
+                        </div>
+                    </td>
+                    <% 
+                    let totalChildSales = 0
+                        logs[logIndex].forEach(function(child) { 
+                            totalChildSales += child.Total
+                            %>
+                      <% }) %>
+                    <td class="py-4 amount"><%=totalChildSales%></td>
+                    <td class="py-4 "><%=logs[logIndex][0].created_at%></td>
+                    <td class="py-4 "><%=logs[logIndex][0].Table%></td>
+                    <td class="py-4 ">
+                      <a href="/app/sale?`Table`=<%=logs[logIndex][0].Table%>&Server=<%=logs[logIndex][0].Server%>"><%=logs[logIndex][0].Server%></a></td>
+                      <td class="py-4 "><%=logs[logIndex][0].Status%></td>
+                    
+                    </tr>
+               
+                <% } %>
+
+                </tbody>
+        </table>
+    </div> -->
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables CSS and JS CDN -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+
+    <!-- Initialize DataTables -->
+    <script>
+        $(document).ready(function () {
+            $('#table').DataTable({
+                "pageLength": 25,
+                "order": [[3, 'desc']]
+            });;
+        });
+    </script>
+
+
+
+</div>
+<br>

@@ -1,0 +1,183 @@
+    <div class="flex w-full justify-between gap-4">
+      
+      <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
+      
+          <div class="flex flex-row justify-between gap-3 items-center">
+          <div class="font-bold text-gray-800">All</div>
+          <a href="/app/sales">
+            <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
+              View
+            </button>
+            </a>
+          </div>
+      </div>
+
+      <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
+      
+        <div class="flex flex-row justify-between gap-3 items-center">
+        <div class="font-bold text-gray-800">Kitchen</div>
+
+          <a href="/app/sales?`Cid`=Kitchen">
+            <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
+            View
+          </button>
+          </a>
+        </div>
+    </div>
+
+    <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
+      
+      <div class="flex flex-row justify-between gap-3 items-center">
+      <div class="font-bold text-gray-800">Bar</div>
+
+      <a href="/app/sales?`Cid`=Bar">
+        <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
+        View
+      </button>
+      </a>
+      </div>
+  </div>
+
+  <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
+      
+    <div class="flex flex-row justify-between gap-3 items-center">
+    <div class="font-bold text-gray-800">Grills</div>
+
+    <a href="/app/sales?`Cid`=Grill">
+      <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
+      View
+    </button>
+    </a>
+    </div>
+</div>
+
+<div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
+      
+  <div class="flex flex-row justify-between gap-3 items-center">
+  <div class="font-bold text-gray-800">Premium</div>
+
+  <a href="/app/sales?`Cid`=Premium">
+    <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
+    View
+  </button>
+  </a>
+  </div>
+</div>
+
+    </div>
+      <div class="flex items-center justify-between gap-2">
+        <!-- Separate input fields for date and time -->
+        <div class="mt-4">
+          <div class="font-bold text-1xl">
+            Showing <span class="queryresp"></span> Sales
+          </div>
+
+    <script>
+        function getCidValue(term) {
+            return new URLSearchParams(window.location.search).get(term);
+        }
+        let resp = 'All'
+        // Example usage
+        const cidValue = getCidValue('`Cid`');
+        if (cidValue !== null) {
+            resp = cidValue
+        }
+        
+        const sValue = getCidValue('`Server`');
+        if (sValue !== null) {
+            resp = sValue
+        }
+        const stValue = getCidValue('`Status`');
+        if (stValue !== null) {
+            resp = stValue
+        }
+        $('.queryresp').html(resp)
+          </script>
+
+        </div>
+
+        <!-- <div class="flex items-center justify-center gap-16 mt-8 mb-3 p-2 hidden">
+          <h1
+            class="font-bold px-6 py-2 text-[17px] text-white rounded-md cursor-pointer bg-[#337ab7]"
+          >
+          <a href="/app/sales">
+            All
+          </a>
+          </h1>
+          <h1
+            class="border-2 px-6 py-2 text-[17px] cursor-pointer border-[#337ab7] rounded-md"
+          >
+          <a href="/app/sales?`Cid`=Grill">
+            Grill
+          </a>
+          </h1>
+          <h1
+            class="border-2 px-6 py-2 text-[17px] cursor-pointer border-[#337ab7] rounded-md"
+          >
+          <a href="/app/sales?`Cid`=Bar">
+            Bar
+          </a>
+          </h1>
+          <h1
+            class="border-2 px-6 py-2 text-[17px] cursor-pointer border-[#337ab7] rounded-md"
+          >
+          <a href="/app/sales?`Cid`=Kitchen">
+            Kitchen
+            </a>
+          </h1>
+        </div> -->
+
+        <!-- Server selection dropdown -->
+        <div
+          class="flex items-center justify-center cursor-pointer outline-none gap-4 mt-8 mb-3 p-2"
+        >
+          <select
+            name="server"
+            id="serverSelect"
+
+            class="input-field border border-indigo-500 rounded-md cursor-pointer w-[300px]"
+          >
+            <option selected>Select Server</option>
+            <option value="Temitope">Temitope</option>
+            <option value="James">James</option>
+          </select>
+          <h1
+            class="border-1 py-1 px-3 text-[17px] cursor-pointer bg-green-200  rounded-md"
+          >
+          <a href="/app/sales?`Status`=CLEARED">
+            Cleared
+          </a>
+          </h1>
+          <h1
+            class="border-1 py-1 px-3 text-[17px] cursor-pointer bg-red-200  rounded-md"
+          >
+          <a href="/app/sales?`Status`=NOTCLEARED">
+            NOTCLEARED
+          </a>
+          
+          </h1>
+<!--           
+          <input
+          type="date"
+          id="liveDate"
+          required
+          name="liveDate"
+          class="input-field"
+        /> -->
+          <script>
+            document.getElementById('serverSelect').addEventListener('change', function() {
+                // Get the selected value
+                var selectedValue = this.value;
+
+                // Define your base URL
+                var baseUrl = 'http://localhost:8000/app/sales?`Server`=';
+
+                // Construct the URL based on the selected value
+                var targetUrl = baseUrl + selectedValue;
+
+                // Redirect to the constructed URL
+                window.location.href = targetUrl;
+            });
+        </script>
+        </div>
+      </div>

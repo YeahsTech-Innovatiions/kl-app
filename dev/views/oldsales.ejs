@@ -1,0 +1,620 @@
+<%- include('partials/header') %>
+
+<div class="flex items-start bg-slate-50 px-2 w-[100%]">
+  <div class="lg:w-[15%] scrollbar-hide">
+    <%- include('partials/sidebar') %>
+  </div>
+
+  <div class="w-[90%] px-5 mt-4 bg-slate-50 mb-10">
+    <div class="container mx-auto px-4 shadow-lg p-4 rounded-md">
+      <h1 class="text-2xl font-semibold mb-4">Sales Performance Dashboard</h1>
+
+      <div
+        class="w-full h-[300px] flex flex-col justify-center border gap-5 bg-gradient-to-r from-[#6653af] to-[#332860] border-gray-200 shadow-md mt-3 p-6"
+      >
+
+      
+
+        <div class="flex items-center h-[300px] w-full gap-4">
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center gap-10 text-white">
+              <i class="fas fa-dollar-sign text-4xl w-10"></i>
+              <div class="flex flex-col items-start">
+                <h1 class="font-bold text-[20px]">$400</h1>
+                <span class="font-light text-[17px] text-gray-50"
+                  >Weekly Sales</span
+                >
+              </div>
+            </div>
+            <div class="flex items-center gap-10 text-white">
+              <i class="fas fa-chart-line text-4xl w-10"></i>
+              <div class="flex flex-col items-start">
+                <h1 class="font-bold text-[20px]">$2000</h1>
+                <span class="font-light text-[17px] text-gray-50"
+                  >Monthly Sales</span
+                >
+              </div>
+            </div>
+            <div class="flex items-center gap-10 text-white">
+              <i class="fas fa-box-open text-4xl w-10"></i>
+              <div class="flex flex-col items-start">
+                <span class="font-bold text-[20px]">$300</span>
+                <h1 class="font-light text-[17px] text-gray-50">
+                  Today's Sales
+                </h1>
+              </div>
+            </div>
+          </div>
+
+          <span class="border-r-2 h-full px-3"></span>
+
+          <div class="relative h-[100%] w-[100%] p-2 mb-2">
+            <canvas id="myChart"></canvas>
+          </div>
+          <!-- <div>
+          <div class="flex items-center gap-10 text-white">
+            <i class="fas fa-dollar-sign text-4xl w-10"></i>
+            <div class="flex flex-col items-start">
+              <h1 class="font-bold text-[20px]">$2000</h1>
+              <span class="font-light text-[17px] text-gray-50"
+                >Monthly Sales</span
+              >
+            </div>
+          </div>
+          <div class="flex items-center gap-10 text-white">
+            <i class="fas fa-chart-line text-4xl w-10"></i>
+            <div class="flex flex-col items-start">
+              <h1 class="font-bold text-[20px]">$2000</h1>
+              <span class="font-light text-[17px] text-gray-50"
+                >Monthly Sales</span
+              >
+            </div>
+          </div>
+          <div class="flex items-center gap-10 text-white">
+            <i class="fas fa-box-open text-4xl w-10"></i>
+            <div class="flex flex-col items-start">
+              <span class="font-bold text-[20px]">$300</span>
+              <h1 class="font-light text-[17px] text-gray-50">
+                Damaged / Loss Products
+              </h1>
+            </div>
+          </div>
+        </div> -->
+
+          <div></div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between gap-2">
+        <!-- Separate input fields for date and time -->
+        <div class="mt-4">
+          <div>
+            <label
+              for="liveDate"
+              class="block text-sm font-medium text-gray-700"
+              >Date:</label
+            >
+            <input
+              type="date"
+              id="liveDate"
+              required
+              name="liveDate"
+              class="input-field"
+            />
+          </div>
+
+          <!-- <div class="mb-4">
+            <label
+              for="liveTime"
+              class="block text-sm font-medium text-gray-700"
+              >Time:</label
+            >
+            <input
+              type="time"
+              id="liveTime"
+              required
+              name="liveTime"
+              class="input-field"
+            />
+          </div> -->
+        </div>
+
+        <div class="flex items-center justify-center gap-16 mt-8 mb-3 p-2">
+          <h1
+            class="font-bold px-6 py-2 text-[17px] text-white rounded-md cursor-pointer bg-[#337ab7]"
+          >
+            All
+          </h1>
+          <h1
+            class="border-2 px-6 py-2 text-[17px] cursor-pointer border-[#337ab7] rounded-md"
+          >
+            Grillz
+          </h1>
+          <h1
+            class="border-2 px-6 py-2 text-[17px] cursor-pointer border-[#337ab7] rounded-md"
+          >
+            Bar
+          </h1>
+          <h1
+            class="border-2 px-6 py-2 text-[17px] cursor-pointer border-[#337ab7] rounded-md"
+          >
+            Kitchen
+          </h1>
+        </div>
+
+        <!-- Server selection dropdown -->
+        <div
+          class="flex items-center justify-center cursor-pointer outline-none gap-16 mt-8 mb-3 p-2"
+        >
+          <select
+            name="server"
+            id="serverSelect"
+            class="input-field border border-indigo-500 rounded-md cursor-pointer w-[300px]"
+          >
+            <option value="Server 1">Server 1</option>
+            <option value="Server 2">Server 2</option>
+            <option value="Server 3">Server 3</option>
+            <option value="Server 4">Server 4</option>
+            <option value="Server 5">Server 5</option>
+          </select>
+        </div>
+      </div>
+      <div class="shadow-md bg-white mt-2 p-2">
+        <table class="w-full">
+          <thead class="bg-[#6653af] text-gray-300">
+            <tr>
+              <th class="text-left font-semibold p-4">Product</th>
+              <!-- <th class="text-left font-semibold">Unit Price</th> -->
+              <!-- <th class="text-left font-semibold">Qty</th> -->
+              <th class="text-left font-semibold">Total</th>
+              <th class="text-left font-semibold">Time</th>
+              <th class="text-left font-semibold">Table</th>
+              <th class="text-left font-semibold">Server</th>
+              <th class="text-left font-semibold">Status</th>
+            </tr>
+          </thead>
+
+          <!-- Open the modal using ID.showModal() method -->
+
+
+          <dialog
+            id="my_modal_5"
+            class="bg-slate-100 p-4 rounded-md shadow-md modal-bottom sm:modal-middle"
+          >
+            <div class="modal-box">
+              <h3 class="font-bold text-lg">Hello!</h3>
+              <p class="py-4">
+                Press ESC key or click the button below to close
+                
+              </p>
+              <div class="modal-action">
+                <form method="dialog">
+                  <!-- if there is a button in form, it will close the modal -->
+                  <button class="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
+
+          <tbody>
+            <tr class="cursor-pointer">
+              <td class="py-4">
+                <div class="flex items-center">
+                  <img
+                    class="h-16 w-16 mr-4"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKxSNwj6qDr-34UijZCkJ1gBK92yXM4HOLOQ&usqp=CAU"
+                  />
+                  <span class="font-semibold flex-col flex">
+                    <span class="font-semibold">Rice</span>
+                    <span class="font-normal">2 total itms</span>
+                  </span>
+                </div>
+              </td>
+
+              <td class="py-4 amount">16000</td>
+
+              <td class="py-4">2023-12-20T19:26:30</td>
+              <td class="py-4">Table1</td>
+              <td class="py-4">Temitope</td>
+              <td class="py-4">Cleared</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="md:w-3/4">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left font-semibold">Product</th>
+                            <!-- <th class="text-left font-semibold">Unit Price</th> -->
+                            <!-- <th class="text-left font-semibold">Qty</th> -->
+                            <th class="text-left font-semibold">Total</th>
+                            <th class="text-left font-semibold">Time</th>
+                            <th class="text-left font-semibold">Table</th>
+                            <th class="text-left font-semibold">Server</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <% 
+                        let tables = []
+                        let logs = {}
+                        let grandTotal = 0
+                        data.sales.forEach(function(i) {
+                            grandTotal += i.Total
+                            let tableKey = i.Table
+                            if (!tables.includes(tableKey)) {
+                                tables.push(tableKey)
+                            }
+
+                            if(logs[tableKey] == null){
+                               logs[tableKey] = []
+                            }
+                            logs[tableKey].push(i)
+                        })
+                        %>
+                        <!-- <%=JSON.stringify(tables)%>
+                        <%=JSON.stringify(logs)%> -->
+                        
+                        <%
+                        let totalItemSales = 0
+                        for(let item = 0; item < tables.length; item++) {
+                            let logIndex = tables[item]
+                            <!-- totalItemSales += -->
+                            <!-- let tableKey = s.Table -->
+                            <!-- tables[tableKey].push(s) -->
+                            %>
+                        <tr>
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Product image">
+                                    <span class="font-semibold flex-col flex">
+                                    <span class="font-semibold"><%=logs[logIndex][0].Name%></span>
+                                    <span class="font-normal"><%=logs[logIndex].length%> total items</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <% 
+                            let totalChildSales = 0
+                                logs[logIndex].forEach(function(child) { 
+                                    totalChildSales += child.Total
+                                    %>
+                            <!-- <tr>
+                                <td class="py-4">
+                                    <div class="flex items-center">
+                                        <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Product image">
+                                        <span class="font-semibold flex-col flex">
+                                        <span class="font-semibold"><%=child.Name%></span>
+                                        <span class="font-normal"><%=child.Cid%> </span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="py-4 amount"><%=child.Unit%></td>
+                                <td class="py-4 "><%=child.Qty%></td>
+                                <td class="py-4 "><%=child.Total%></td>
+                                <td class="py-4 "><%=child.created_at%></td>
+                                <td class="py-4 "><%=child.Table%></td>
+                                <td class="py-4 "><%=child.Server%></td>
+                            </tr> -->
+                            <!-- More product rows -->
+                              <% }) %>
+                            <td class="py-4 amount"><%=totalChildSales%></td>
+                            <!-- <td class="py-4 amount"><%=JSON.stringify(logs[logIndex])%></td> -->
+                            <td class="py-4 "><%=logs[logIndex][0].created_at%></td>
+                            <td class="py-4 "><%=logs[logIndex][0].Table%></td>
+                            <td class="py-4 "><%=logs[logIndex][0].Server%></td>
+                        </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <div style="
+                                    display: flex;
+                                    justify-content: space-between;
+                                    background: #c5b3b330;
+                                    padding: 20px;
+                                ">
+                                    <div class="text-left font-semibold">Product</div>
+                                    <div class="text-left font-semibold">Unit Price</div>
+                                    <div class="text-left font-semibold">Qty</div>
+                                    <div class="text-left font-semibold">Total</div>
+                                                                        
+                                </div>
+                                 <% logs[logIndex].forEach(function(child) { 
+                                    %>
+                                    <div style="
+                                    display: flex;
+                                    justify-content: space-between;
+                                    background: #f2f2f230;
+                                    padding: 20px;
+                                ">
+                                <div class="text-left font-normal"><%=child.Name%></div>
+                                <div class="text-left font-normal"><%=child.Unit%></div><div class="text-left font-normal"><%=child.Qty%></div><div class="text-left font-normal"><%=child.Total%></div></div>
+                                <% }) %>
+                            </td> 
+                        </tr>
+                       
+                        <% } %>
+
+                        <%
+                        data.sales.forEach(function(s) {
+                            <!-- let tableKey = s.Table -->
+                            <!-- tables[tableKey].push(s) -->
+                            %>
+                            <!-- <span class="px-5 py-1 rounded-2xl text-sm font-semibold mr-4">
+                              <%=s.Name%>
+                            </span> -->
+                        <!-- <tr>
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Product image">
+                                    <span class="font-semibold flex-col flex">
+                                    <span class="font-semibold"><%=s.Name%></span>
+                                    <span class="font-normal"><%=s.Pid%></span>
+                                    <span class="font-normal"><%=s.Cid%></span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="py-4 amount"><%=s.Unit%></td>
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <button class="border rounded-md py-2 px-4 mr-2">-</button>
+                                    <span class="text-center w-8"><%=s.Qty%></span>
+                                    <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                </div>
+                            </td>
+                            <td class="py-4 amount"><%=s.Total%></td>
+                            <td class="py-4 "><%=s.created_at%></td>
+                            <td class="py-4 "><%=s.Table%></td>
+                            <td class="py-4 "><%=s.Server%></td>
+                        </tr> -->
+                        <!-- More product rows -->
+                          <% }) %>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="md:w-1/4">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4">Report</h2>
+                    <div class="flex justify-between mb-2">
+                        <span>Sales</span>
+                        <span><%=data.sales.length%></span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span>Tables Served</span>
+                        <span><%=tables.length%></span>
+                    </div>
+                    
+                    <hr class="my-2">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Payment Received</span>
+                        <span class="font-semibold"><%=grandTotal%></span>
+                    </div>
+                    <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Print</button>
+                </div>
+        </div>
+    </div>
+
+      <style>
+        td.py-4 {
+          max-width: 90px !important;
+        }
+      </style>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+        const ctx = document.getElementById("myChart");
+
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"],
+            datasets: [
+              {
+                label: "Average Yearly Sales",
+                data: [610000, 400000, 309000, 570000, 708000, 370000, 820000],
+                borderWidth: 1,
+                backgroundColor: "rgb(51,122,183)",
+                borderColor: "#b5b5b5",
+              },
+            ],
+          },
+          options: {
+            layout: {
+              padding: {
+                left: 0,
+                right: 0,
+                top: 15,
+                bottom: 15,
+              },
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+                ticks: {
+                  color: "#e3e3e3",
+                },
+              },
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: "#e3e3e3",
+                  font: {
+                    weight: "200",
+                  },
+                  callback: function (value, index, values) {
+                    return "₦" + new Intl.NumberFormat().format(value);
+                  },
+                },
+                grid: {
+                  color: "",
+                },
+              },
+            },
+            plugins: {
+              title: {
+                display: true,
+                text: "Average Yearly Sales",
+                font: {
+                  size: 20,
+                  weight: "bold",
+                },
+                color: "white", // Change the legend labels to white
+              },
+
+              legend: {
+                labels: {
+                  font: {
+                    size: 14,
+                    weight: "bold",
+                  },
+                  color: "white", // Change the legend labels to white
+                },
+              },
+            },
+          },
+        });
+      </script>
+
+      <script>
+        function clearCart(key) {
+          // Get the current URL parameters
+          const urlParams = new URLSearchParams(window.location.search);
+
+          // Check if there are any parameters
+          if (urlParams.has("callback")) {
+            // Clear the localStorage
+            if (localStorage.getItem(key)) {
+              // Remove the key
+              localStorage.removeItem(key);
+              alert(`Key '${key}' has been removed from localStorage.`);
+            } else {
+              alert(`Key '${key}' does not exist in localStorage.`);
+            }
+
+            alert("localStorage has been cleared!");
+          }
+        }
+
+        // Call the function when the page loads
+        window.onload = function () {
+          clearCart("cart");
+        };
+      </script>
+      <%- include('partials/footer') %>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Function to open the modal
+  function openModal() {
+    const modal = document.getElementById("my_modal_5");
+    modal.showModal();
+  }
+
+  // Function to close the modal
+  function closeModal() {
+    const modal = document.getElementById("my_modal_5");
+    modal.close();
+  }
+
+  // Get all table rows
+  const tableRows = document.querySelectorAll("tbody tr");
+
+  // Add event listener to each table row to open modal on click
+  tableRows.forEach((row) => {
+    row.addEventListener("click", openModal);
+  });
+</script>
+
+<script>
+  // Function to combine date and time into a single value
+  function combineDateTime(date, time) {
+    return `${date}T${time}`;
+  }
+
+  // Function to update the combined date and time value and save to local storage
+  function updateCombinedDateTime() {
+    const liveDate = document.getElementById("liveDate").value;
+    const liveTime = document.getElementById("liveTime").value;
+    const combinedDateTime = combineDateTime(liveDate, liveTime);
+    localStorage.setItem("selectedDateTime", combinedDateTime);
+    startInterval();
+  }
+
+  let interval;
+
+  // Function to start the interval to update time in real-time
+  function startInterval() {
+    clearInterval(interval);
+    const liveTimeInput = document.getElementById("liveTime");
+    const selectedTime = liveTimeInput.value;
+    if (!selectedTime) {
+      interval = setInterval(() => {
+        const currentTime = new Date().toISOString().split("T")[1].slice(0, 5);
+        liveTimeInput.value = currentTime;
+      }, 1000);
+    }
+  }
+
+  // Set initial values to current date and time
+  const currentDate = new Date().toISOString().split("T")[0];
+  const currentTime = new Date().toISOString().split("T")[1].slice(0, 5);
+  document.getElementById("liveDate").value = currentDate;
+  document.getElementById("liveTime").value = currentTime;
+
+  // Retrieve and set the stored date and time from local storage, if available
+  const storedDateTime = localStorage.getItem("selectedDateTime");
+  if (storedDateTime) {
+    const storedDate = storedDateTime.split("T")[0];
+    const storedTime = storedDateTime.split("T")[1].slice(0, 5);
+    document.getElementById("liveDate").value = storedDate;
+    document.getElementById("liveTime").value = storedTime;
+    startInterval();
+  }
+
+  // Event listeners to update and save the combined date and time value on input change
+  document
+    .getElementById("liveDate")
+    .addEventListener("input", updateCombinedDateTime);
+  document
+    .getElementById("liveTime")
+    .addEventListener("input", updateCombinedDateTime);
+</script>
+
+<style>
+  /* Input field styles */
+  .input-field {
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    width: 100%;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .input-field:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  }
+
+  /* Button styles */
+  .btn-submit {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    background-color: #6366f1;
+    color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn-submit:hover {
+    background-color: #4f46e5;
+  }
+</style>

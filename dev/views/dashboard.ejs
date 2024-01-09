@@ -1,0 +1,395 @@
+<%- include('partials/header') %>
+<div class="flex items-start bg-slate-50 px-2 w-[100%]">
+  <div class="lg:w-[15%] scrollbar-hide">
+    <%- include('partials/sidebar') %>
+  </div>
+
+  <!-- component -->
+  <div class="w-[90%] px-5 bg-white">
+    <div class="flex lg:flex-row flex-col-reverse shadow-lg">
+      <!-- left section -->
+      <div class="w-full min-h-screen shadow-lg">
+        <!-- header -->
+        <div class="flex flex-row justify-between items-center px-5 mt-5">
+          <div class="text-gray-800">
+            <div class="font-bold text-xl">Dashboard</div>
+            <span class="text-xs"><%- new Date( Date.now())%></span>
+          </div>
+          <div class="flex items-center">
+            <div class="text-sm text-center mr-4">
+              <div class="font-light text-gray-500">Current User</div>
+              <div class="font-semibold flex items-center gap-2">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+
+                <%= data.authUser.Name %>
+              </div>
+            </div>
+            <div>
+              <a href="/login">
+                <span
+                class="px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded cursor-pointer"
+                >Logout</span
+              ></a>
+            </div>
+          </div>
+        </div>
+        <!-- end header -->
+        <!-- categories -->
+
+        <!-- end categories -->
+        <!-- products -->
+        <div class="grid grid-cols-4 gap-6 px-5 mt-5 overflow-y-auto">
+          <a href="/app/products" class="admin-only">
+            <div
+              class="px-3 py-3 flex flex-col border border-gray-200 shadow-lg rounded-md justify-between"
+            >
+              <div>
+                <div class="font-bold text-gray-800">Products</div>
+                <span class="font-light text-sm text-gray-400"
+                  >All Products</span
+                >
+              </div>
+              <div class="flex flex-row justify-between items-center">
+                <i class="fas fa-hamburger text-3xl text-[#ce7e24]"></i>
+                <div class="flex flex-row justify-between gap-3 items-center">
+                  <span class="self-end font-bold text-lg text-yellow-500"
+                    ><%=data.products.length%></span
+                  >
+                  <button
+                    class="object-cover rounded-md btn btn-default text-[#1d9bf0]"
+                    alt=""
+                  >
+                    View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="/app/sales">
+            <div
+              class="px-3 py-3 flex flex-col border border-gray-200 shadow-lg rounded-md justify-between"
+            >
+              <div>
+                <div class="font-bold text-gray-800">Orders</div>
+                <span class="font-light text-sm text-gray-400">All Orders</span>
+              </div>
+              <div class="flex flex-row justify-between items-center">
+                <i class="fas fa-list text-3xl text-gray-400"></i>
+                <div class="flex flex-row justify-between gap-3 items-center">
+                  <span class="self-end font-bold text-lg text-yellow-500"
+                    ><%=data.sales.length%></span
+                  >
+                  <button
+                    class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]"
+                    alt=""
+                  >
+                    View
+                  </button>
+                </div>
+              </div>
+            </div></a
+          >
+
+          <a href="/app/staffs" class="admin-only">
+            <div
+              class="px-3 py-3 flex flex-col border border-gray-200 shadow-lg rounded-md justify-between"
+            >
+              <div>
+                <div class="font-bold text-gray-800">Staffs</div>
+                <span class="font-light text-sm text-gray-400">All Staffs</span>
+              </div>
+              <div class="flex flex-row justify-between items-center">
+                <i class="fa fa-users text-3xl text-[#7d4ed5]"></i>
+                <div class="flex flex-row justify-between gap-3 items-center">
+                  <span class="self-end font-bold text-lg text-yellow-500"
+                    ><%=data.staffs.length%></span
+                  >
+                  <button
+                    class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]"
+                    alt=""
+                  >
+                    View
+                  </button>
+                </div>
+              </div>
+            </div></a
+          >
+          <span>
+            <a href="/app/pos">
+              <div
+                class="px-3 py-3 flex flex-col border border-gray-200 shadow-lg rounded-md justify-between"
+              >
+                <div>
+                  <div class="font-bold text-gray-800">Sales Points</div>
+                  <span class="font-light text-sm text-gray-400"
+                    >All Categories</span
+                  >
+                </div>
+                <div class="flex flex-row justify-between items-center">
+                  <i class="fa fa-credit-card text-3xl text-[#36a858]"></i>
+                  <div class="flex flex-row justify-between gap-3 items-center">
+                    <span class="self-end font-bold text-lg text-yellow-500"
+                      ><%=data.category.length%></span
+                    >
+                    <button
+                      class="w-14 object-cover rounded-md btn btn-default"
+                      alt=""
+                    >
+                      View
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- <button id="addItemButton" onclick="chooseTable()">
+            Close Table
+          </button> -->
+          </span>
+        </div>
+
+        <ul id="openTables" class="flex-grid gap-4 px-5"></ul>
+
+        <div class="flex flex-wrap items-center gap-4 shadow-md p-4 mt-10">
+          <div class="flex items-center gap-3 px-2">
+            <div
+              class="relative cursor-pointer group overflow-hidden transition-all border-2 border-[#1d9bf0] text-[#1d9bf0] font-bold px-3 py-2 rounded-lg text-[16px] mb-5 flex items-center justify-center duration-300 ease-in-out"
+            >
+              <span
+                class="w-40 h-48 rounded rotate-[-40deg] bg-[#1d9bf0] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"
+              ></span>
+              <div
+                class="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white"
+                id="addItemButton"
+                onclick="openTable(1)"
+              >
+                Table 1
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div
+              class="relative cursor-pointer group overflow-hidden transition-all border-2 border-[#1d9bf0] text-[#1d9bf0] font-bold px-3 py-2 rounded-lg text-[16px] mb-5 flex items-center justify-center duration-300 ease-in-out"
+            >
+              <span
+                class="w-40 h-48 rounded rotate-[-40deg] bg-[#1d9bf0] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"
+              ></span>
+              <div
+                class="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white"
+                id="addItemButton"
+                onclick="openTable(2)"
+              >
+                Table 2
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div
+              class="relative cursor-pointer group overflow-hidden transition-all border-2 border-[#1d9bf0] text-[#1d9bf0] font-bold px-3 py-2 rounded-lg text-[16px] mb-5 flex items-center justify-center duration-300 ease-in-out"
+            >
+              <span
+                class="w-40 h-48 rounded rotate-[-40deg] bg-[#1d9bf0] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"
+              ></span>
+              <div
+                class="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white"
+                id="addItemButton"
+                onclick="openTable(3)"
+              >
+                Table 3
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div
+              class="relative cursor-pointer group overflow-hidden transition-all border-2 border-[#1d9bf0] text-[#1d9bf0] font-bold px-3 py-2 rounded-lg text-[16px] mb-5 flex items-center justify-center duration-300 ease-in-out"
+            >
+              <span
+                class="w-40 h-48 rounded rotate-[-40deg] bg-[#1d9bf0] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"
+              ></span>
+              <div
+                class="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white"
+                id="addItemButton"
+                onclick="openTable(4)"
+              >
+                Table 4
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div
+              class="relative cursor-pointer group overflow-hidden transition-all border-2 border-[#1d9bf0] text-[#1d9bf0] font-bold px-3 py-2 rounded-lg text-[16px] mb-5 flex items-center justify-center duration-300 ease-in-out"
+            >
+              <span
+                class="w-40 h-48 rounded rotate-[-40deg] bg-[#1d9bf0] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"
+              ></span>
+              <div
+                class="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white"
+                id="addItemButton"
+                onclick="openTable(5)"
+              >
+                Table 5
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div
+              class="relative cursor-pointer group overflow-hidden transition-all border-2 border-[#1d9bf0] text-[#1d9bf0] font-bold px-3 py-2 rounded-lg text-[16px] mb-5 flex items-center justify-center duration-300 ease-in-out"
+            >
+              <span
+                class="w-40 h-48 rounded rotate-[-40deg] bg-[#1d9bf0] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"
+              ></span>
+              <div
+                class="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white"
+                id="addItemButton"
+                onclick="openTable(6)"
+              >
+                Table 6
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div
+              class="relative cursor-pointer group overflow-hidden transition-all border-2 border-[#1d9bf0] text-[#1d9bf0] font-bold px-3 py-2 rounded-lg text-[16px] mb-5 flex items-center justify-center duration-300 ease-in-out"
+            >
+              <span
+                class="w-40 h-48 rounded rotate-[-40deg] bg-[#1d9bf0] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"
+              ></span>
+              <div
+                class="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white"
+                id="addItemButton"
+                onclick="openTable(7)"
+              >
+                Table 7
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div
+              class="relative cursor-pointer group overflow-hidden transition-all border-2 border-[#1d9bf0] text-[#1d9bf0] font-bold px-3 py-2 rounded-lg text-[16px] mb-5 flex items-center justify-center duration-300 ease-in-out"
+            >
+              <span
+                class="w-40 h-48 rounded rotate-[-40deg] bg-[#1d9bf0] absolute bottom-0 left-0 -translate-x-full ease-out duration-500 transition-all translate-y-full mb-9 ml-9 group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0"
+              ></span>
+              <div
+                class="relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white"
+                id="addItemButton"
+                onclick="openTable(8)"
+              >
+                Table 8
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <style>
+          .flex-grid {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+          }
+
+          .flex-grid li {
+            width: 100px;
+            text-align: center;
+            margin: 2px;
+            list-style: none;
+            border-radius: 12px;
+            cursor: pointer;
+
+            background-color: #cdadf9;
+            border: 1px solid #ccc;
+            padding: 4px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+          }
+          .flex-grid li:hover {
+            transition: all;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1); /* Add this line to reduce the shadow on hover */
+          }
+        </style>
+
+        <script>
+          // Retrieve the array from localStorage
+          let openTables = localStorage.getItem("openTables");
+          openTables = JSON.parse(openTables) || [];
+
+          function openTable(num) {
+            const random = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let randomLetter = random.charAt(
+              Math.floor(Math.random() * random.length)
+            );
+            let table = "Table" + num + randomLetter;
+            if (openTables.includes(table)) {
+              table += random.charAt(
+                Math.floor(Math.random() * random.length)
+              )
+            alert(table)
+            }
+            openTables.push(table);
+            localStorage.setItem("openTables", JSON.stringify(openTables));
+            localStorage.setItem(table, "[]");
+            window.location.reload()
+          }
+
+          function closeTable(num = null) {
+            // alert(num);
+            // let num = prompt("Table Number");
+            const tableIndex = openTables.indexOf(num);
+            // alert(tableIndex);
+            if (tableIndex > -1) {
+              localStorage.removeItem(num);
+              openTables.splice(tableIndex, 1);
+              localStorage.setItem("openTables", JSON.stringify(openTables));
+              if(openTables.length <= 1){
+                localStorage.removeItem('currentTable');
+              }
+              window.location.reload()
+            }
+          }
+
+          function chooseTable(num = null) {
+            // let num = prompt("Table Number");
+            localStorage.setItem("currentTable", num);
+            window.location.href = '/app/pos'
+          }
+
+          // Render each item to the HTML using jQuery
+          const listContainer = $("#openTables");
+
+          openTables.forEach((item) => {
+            const listItem = $("<li id=" + item + " class='chooseTable'>").html(
+              item
+            );
+            const closeItem = $("<li id=" + item + " class='closeTable'>").html(
+              `X`
+            );
+            listContainer.append(listItem);
+            listContainer.append(closeItem);
+          });
+          $(".closeTable").click(function () {
+            var clickedBtnID = $(this).attr("id"); // or var clickedBtnID = this.id
+            // alert("you clicked on button #" + clickedBtnID);
+            closeTable(clickedBtnID);
+          });
+          
+          $(".chooseTable").click(function () {
+            var clickedBtnID = $(this).attr("id"); // or var clickedBtnID = this.id
+            // alert("you clicked on button #" + clickedBtnID);
+            chooseTable(clickedBtnID);
+          });
+        </script>
+        <!-- end products -->
+      </div>
+      <!-- end left section -->
+    </div>
+  </div>
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,357 @@
+<%- include('partials/header') %>
+<div class="container mx-auto bg-slate-50 h-[vh]">
+  <div class="flex lg:flex-row gap-4 p-4 flex-col-reverse shadow-lg py-4">
+    <!-- left section -->
+    <div class="w-full lg:w-[70%] h-screen shadow-md border border-gray-200">
+      <!-- header -->
+      <div class="flex flex-row justify-between items-center px-5 mt-5">
+        <div class="text-gray-800">
+          <div class="font-bold text-xl">Products</div>
+          <span class="text-xs"><%= data.products.length%> Total</span>
+        </div>
+
+        <div
+          class="border border-[#3957db] p-2 rounded-md transition-all duration-100 ease-in-out hover:border-2 hover:border-blue-500 w-[50%] flex items-center gap-2"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            placeholder="Search Products"
+            id="productSearch"
+            class="w-full outline-none"
+          />
+        </div>
+
+        <div class="flex items-center">
+          <div class="text-sm text-center mr-4">
+            <div class="font-light text-gray-500">Current Server</div>
+            <div class="flex items-center gap-1">
+              <i class="fa-regular fa-user"></i>
+              <span class="font-semibold">Temitope</span>
+            </div>
+          </div>
+          <!-- <div
+            class="cursor-pointer px-4 py-2 flex items-center gap-1 hover:bg-red-400 transition-all bg-red-500 text-white font-semibold rounded-md"
+          >
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+            <span> Logout </span>
+          </div> -->
+        </div>
+      </div>
+      <!-- end header -->
+      <!-- categories -->
+      <div class="mt-5 flex flex-row px-5">
+        <!-- Add an "All" category -->
+        <span
+          data-category="all"
+          class="px-5 cursor-pointer bg-[#6653af] text-white py-1 rounded-2xl text-sm font-semibold mr-4 category"
+        >
+          All
+        </span>
+
+        <% data.category.forEach(function(c) { %>
+        <span
+          data-category="<%=c.Name%>"
+          class="px-5 cursor-pointer border-[#6653af] border py-1 rounded-2xl text-sm font-semibold mr-4 category"
+        >
+          <%=c.Name%>
+        </span>
+
+        <% }) %>
+      </div>
+
+      <!-- end categories -->
+      <!-- products -->
+      <div class="grid grid-cols-3 gap-4 px-5 mt-7 py-5 overflow-y-auto h-3/4">
+        <% data.products.forEach(function(p) { %>
+        <div
+          data-id="<%=p.id%>"
+          data-name="<%= p.Name %>"
+          data-category="<%= p.Category %>"
+          data-price="<%= p.Price %>"
+          class="px-3 py-3 flex flex-col border hover:shadow-sm transition-all shadow-md border-gray-200 rounded-md h-32 justify-between product"
+        >
+          <div class="flex justify-between">
+            <div>
+            <div class="font-bold text-gray-800"><%= p.Name %></div>
+            <span class="font-medium text-md text-gray-600"><%= p.Stock %></span>
+            </div>
+            <img src="/images/<%= p.Category %>.png" class="w-10 h-10 rounded-full"/>
+
+          </div>
+          <div class="flex flex-col sm:flex-row justify-between items-center">
+            <span
+              class="self-end font-bold md:text-base text-sm text-left text-[#6653af] amount"
+              ><%= p.Price %></span
+            >
+            <div
+              class="flex items-center justify-center gap-1 border-2 border-slate-300 hover:opacity-75 transition-all p-1 rounded-md cursor-pointer"
+            >
+              <i class="fa-solid fa-cart-plus text-gray-500"></i>
+              <button class="add-to-cart text-sm">Add to Cart</button>
+            </div>
+            <!-- <img src="" class=" h-14 w-14 object-cover rounded-md" alt=""> -->
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <!-- end products -->
+    </div>
+    <!-- end left section -->
+    <!-- right section -->
+    <div
+      class="w-full lg:w-[30%] mb-4 lg:mb-0 bg-gray-200 h-[450px] rounded-md"
+    >
+      <!-- header -->
+      <div class="flex flex-row items-center justify-between px-5 mt-5">
+        <div class="font-bold text-base">Current Table:</div>
+        <div class="font-semibold">
+          <!-- <span class="px-4 py-2 rounded-md bg-red-100 text-red-500">x</span> -->
+          <span
+            class="px-4 py-2 text-sm rounded-md bg-gray-100 text-gray-800"
+            id="currentTable"
+          ></span>
+        </div>
+      </div>
+      <!-- end header -->
+      <!-- order list -->
+      <div
+        class="py-4 mt-5 px-4 rounded-md overflow-y-auto h-64 hide-scrollbar"
+      >
+        <ul id="cart"></ul>
+      </div>
+      <!-- end order list -->
+      <!-- totalItems -->
+      <!-- <div class="px-4 mt-5">
+        <div class="py-4 rounded-md bg-slate-100 shadow-lg">
+          <div class="px-4 flex justify-between">
+            <span class="font-semibold text-sm">Total</span>
+            <span class="font-bold">$35.25</span>
+          </div>
+        </div>
+      </div> -->
+      <div class="px-5 mt-2">
+        <!-- <button
+          type="button"
+          onclick="processCart()"
+          class="px-4 py-4 rounded-md shadow-lg text-center bg-[#6653af] text-white font-semibold"
+        >
+          Process Order
+        </button> -->
+        <button type="button" onclick="processCart()" class="px-4 py-4 rounded-md shadow-lg text-center bg-[#6653af] text-white font-semibold w-full" style="
+    background: green;
+">
+          Process Order
+        </button>
+
+      </div>
+      <!-- </form> -->
+      <!-- end button pay -->
+    </div>
+    <!-- end right section -->
+  </div>
+</div>
+
+<style>
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+</style>
+
+<script>
+  $(document).ready(function () {
+    $("#productSearch").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $(".product").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $(".category").on("click", function () {
+      // var category = $(this).data("category").toLowerCase();
+      var category = $(this).data("category");
+
+      // Remove active state from all categories
+      $(".category").removeClass("bg-[#6653af] text-white");
+      // Add active state to clicked category
+      $(this).addClass("bg-[#6653af] text-white");
+
+      if (category === "all") {
+        // If "All" is clicked, show all products
+        $(".product").show();
+      } else {
+        // Otherwise, show only the products that belong to the clicked category
+        $(".product").hide();
+        $('.product[data-category="' + category + '"]').show();
+      }
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function () {
+    $(".add-to-cart").on("click", function () {
+      const product = $(this).closest(".product");
+      addToCart(product);
+    });
+
+    let currentTable = localStorage.getItem("currentTable");
+    $("#currentTable").text(currentTable);
+
+    function addToCart(product) {
+      let genTable = "Table1" + Date.now();
+      let currentTable = localStorage.getItem("currentTable");
+      if (currentTable == null) {
+        localStorage.setItem("currentTable", genTable);
+        currentTable = genTable;
+      }
+      // Get the product data (id, name, price, et)
+      const productId = product.data("id");
+      const productName = product.data("name");
+      const category = product.data("category");
+      const price = parseFloat(product.data("price"));
+
+      const cartItem = {
+        id: productId,
+        name: productName,
+        price: price,
+        qty: 1,
+        category: category,
+        Table: currentTable,
+        Server: "Temitope",
+      };
+
+      // Retrieve existing cart items from localStorage
+      let cart = JSON.parse(localStorage.getItem(currentTable)) || [];
+
+      // Check if the product is already in the cart
+      const existingItem = cart.find((item) => item.id === productId);
+
+      if (existingItem) {
+        // If the product is already in the cart, update the Qty
+        existingItem.qty++;
+      } else {
+        // If the product is not in the cart, add it
+        cart.push(cartItem);
+      }
+
+      // Save the updated cart to localStorage
+      localStorage.setItem(currentTable, JSON.stringify(cart));
+
+      // Update the cart display
+      updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+      const cartList = $("#cart");
+      cartList.empty();
+      let currentTable = localStorage.getItem("currentTable");
+
+      // Retrieve the current cart from localStorage
+      const cart = JSON.parse(localStorage.getItem(currentTable)) || [];
+
+      // Display each item in the cart
+      cart.forEach((item, index) => {
+        let row =
+          '<div class="flex flex-row justify-between items-center mb-4"><div class="flex flex-row items-center w-[100px]">' +
+          '<span class="remove-cart bg-red-500 text-white text-[14px] p-3 hover:bg-red-600 transition-all mr-1 flex items-center justify-center font-semibold w-1 h-1 text-white rounded-full cursor-pointer"> X </span>' +
+          '<img src="https://source.unsplash.com/4u_nRgiLW3M/600x600" class="w-0 h-0 object-cover rounded-md" alt="">' +
+          '<span class="mx-1 font-semibold text-sm flex items-center">' +
+          item.name +
+          '</span> </div><div class="flex gap-2"><span class="minus h-5 w-5 flex items-center justify-center rounded-full bg-white pb-1 cursor-pointer">-</span><span class="font-semibold mx-2 w-8">' +
+          item.qty +
+          '</span><span class="plus h-5 w-5 flex items-center justify-center rounded-full bg-white pb-1 cursor-pointer ">+</span></div><div class="font-semibold text-sm ml-2 w-16 text-left amount">' +
+          item.qty * item.price +
+          "</div></div>";
+
+        const listItem = $(row);
+        listItem.find(".minus").on("click", function () {
+          if (item.qty > 1) {
+            item.qty--;
+            localStorage.setItem(currentTable, JSON.stringify(cart));
+            updateCartDisplay();
+          }
+        });
+        listItem.find(".plus").on("click", function () {
+          item.qty++;
+          localStorage.setItem(currentTable, JSON.stringify(cart));
+          updateCartDisplay();
+        });
+
+        listItem.find(".remove-cart").on("click", function () {
+          cart.splice(index, 1);
+          localStorage.setItem(currentTable, JSON.stringify(cart));
+          updateCartDisplay();
+        });
+
+        cartList.append(listItem);
+      });
+    }
+
+    // Initial update of the cart display on page load
+    updateCartDisplay();
+
+    let openTables = [1, 2, 3];
+
+    if(currentTable == undefined){
+      alert('You need to select a table before making orders')
+      window.location.href = '/app'
+    }
+  });
+  function processCart() {
+    const currentTable = localStorage.getItem("currentTable");
+    const cart = JSON.parse(localStorage.getItem(currentTable));
+    
+    let openTables = localStorage.getItem("openTables");
+          openTables = JSON.parse(openTables) || [];
+
+    let completeSales = cart.length
+    let index = 0
+    cart.forEach((c) => {
+      index++
+      let payload = {
+        Pid: c.id,
+        Cid: c.category,
+        Name: c.name,
+        Unit: c.price,
+        Total: c.price * c.qty,
+        Qty: c.qty,
+        "`Table`": c.Table,
+        Server: c.Server,
+      };
+
+      $.post("/app/sales", { payload }, function (data) {
+        // alert("processed");
+        console.log(data);
+        if(completeSales == index){
+          localStorage.removeItem(currentTable)
+
+          const tableIndex = openTables.indexOf(currentTable);
+            if (tableIndex > -1) {
+              localStorage.removeItem(currentTable);
+              openTables.splice(tableIndex, 1);
+              localStorage.setItem("openTables", JSON.stringify(openTables));
+              localStorage.removeItem('currentTable');
+            }
+
+          window.location.href = '/sales'
+        }
+      });
+    });
+  }
+
+</script>
+
+<%- include('partials/footer') %>

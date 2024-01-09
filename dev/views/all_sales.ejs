@@ -1,0 +1,88 @@
+<%- include('partials/header') %>
+
+<div class="flex items-start bg-slate-50 px-2 w-[100%]">
+  <div class="lg:w-[15%] scrollbar-hide">
+    <%- include('partials/sidebar') %>
+  </div>
+
+  <div class="w-[90%] px-5 mt-4 bg-slate-50 mb-10">
+    <div class="container mx-auto px-4 shadow-lg p-4 rounded-md">
+      <h1 class="text-2xl font-semibold mb-4">Sales Records</h1>
+
+    <%- include('partials/sales_filters') %>
+    <%- include('partials/kitchen_sales') %>
+    <%- include('partials/bar_sales') %>
+    <%- include('partials/grill_sales') %>
+    <%- include('partials/premium_sales') %>
+
+
+
+
+
+      <style>
+        td.py-4 {
+          max-width: 90px !important;
+        }
+      </style>
+
+  
+
+      <%- include('partials/footer') %>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Function to open the modal
+  function openModal() {
+    const modal = document.getElementById("my_modal_5");
+    modal.showModal();
+  }
+
+  // Function to close the modal
+  function closeModal() {
+    const modal = document.getElementById("my_modal_5");
+    modal.close();
+  }
+
+  // Get all table rows
+  const tableRows = document.querySelectorAll("tbody tr");
+
+  // Add event listener to each table row to open modal on click
+  tableRows.forEach((row) => {
+    row.addEventListener("click", openModal);
+  });
+</script>
+
+
+<style>
+  /* Input field styles */
+  .input-field {
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    width: 100%;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .input-field:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  }
+
+  /* Button styles */
+  .btn-submit {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    background-color: #6366f1;
+    color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn-submit:hover {
+    background-color: #4f46e5;
+  }
+</style>

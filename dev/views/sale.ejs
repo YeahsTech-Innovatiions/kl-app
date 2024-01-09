@@ -1,0 +1,272 @@
+<%- include('partials/header') %>
+
+<div class="flex items-start bg-slate-50 px-2 w-[100%]">
+  <div class="lg:w-[15%] scrollbar-hide">
+    <%- include('partials/sidebar') %>
+  </div>
+
+  <div class="w-[90%] px-5 mt-4 bg-slate-50 mb-10">
+    <div class="container mx-auto px-4 shadow-lg p-4 rounded-md">
+      <h1 class="text-2xl font-semibold mb-4">Sales Receipt</h1>
+      
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="md:w-3/4">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th class="text-left w-[20%] font-semibold">Product</th>
+                            <!-- <th class="text-left font-semibold">Unit Price</th> -->
+                            <!-- <th class="text-left font-semibold">Qty</th> -->
+                            <th class="text-left w-[20%] font-semibold">Total</th>
+                            <th class="text-left w-[20%] font-semibold">Date</th>
+                            <th class="text-left w-[20%] font-semibold">Table</th>
+                            <th class="text-left w-[20%] font-semibold">Server</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <% 
+                        let tables = []
+                        let logs = {}
+                        let grandTotal = 0
+                        data.sales.forEach(function(i) {
+                            grandTotal += i.Total
+                            let tableKey = i.Table
+                            if (!tables.includes(tableKey)) {
+                                tables.push(tableKey)
+                            }
+
+                            if(logs[tableKey] == null){
+                               logs[tableKey] = []
+                            }
+                            logs[tableKey].push(i)
+                        })
+                        %>
+                        <!-- <%=JSON.stringify(tables)%>
+                        <%=JSON.stringify(logs)%> -->
+                        
+                        <%
+                        let totalItemSales = 0
+                        for(let item = 0; item < tables.length; item++) {
+                            let logIndex = tables[item]
+                            <!-- totalItemSales += -->
+                            <!-- let tableKey = s.Table -->
+                            <!-- tables[tableKey].push(s) -->
+                            %>
+                        <tr class="no-link">
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <!-- <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Product image"> -->
+                                    <span class="font-semibold flex-col flex">
+                                    <span class="font-semibold"><%=logs[logIndex][0].Name%></span>
+                                    <span class="font-normal"><%=logs[logIndex].length%> total items</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <% 
+                            let totalChildSales = 0
+                                logs[logIndex].forEach(function(child) { 
+                                    totalChildSales += child.Total
+                                    %>
+                              <% }) %>
+                            <td class="py-4 amount"><%=totalChildSales%></td>
+                            <!-- <td class="py-4 amount"><%=JSON.stringify(logs[logIndex])%></td> -->
+
+                            <td class="py-4 "> <%= logs[logIndex][0].date_created.toLocaleDateString('en-US',{ weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })%></td>
+                            <td class="py-4 "><%=logs[logIndex][0].Table%></td>
+                            <td class="py-4 "><%=logs[logIndex][0].Server%></td>
+                        </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <div style="
+                                    display: flex;
+                                    justify-content: space-between;
+                                    background: #c5b3b330;
+                                    padding: 20px;
+                                ">
+                                    <div class="text-left font-semibold  w-[25%]">Product</div>
+                                    <div class="text-left font-semibold  w-[25%]">Unit Price</div>
+                                    <div class="text-left font-semibold  w-[25%]">Qty</div>
+                                    <div class="text-left font-semibold  w-[25%]">Total</div>
+                                                                        
+                                </div>
+                                 <% logs[logIndex].forEach(function(child) { 
+                                    %>
+                                    <div style="
+                                    display: flex;
+                                    justify-content: space-between;
+                                    background: #f2f2f230;
+                                    padding: 20px;
+                                ">
+                                <div class="text-left font-normal flex w-[25%]">
+                                  
+                                  <div class=" ">
+                                    <img class="w-8 mr-4 rounded-full" src="/images/<%=child.Cid%>.png" alt="Product image"> 
+                                  </div>
+                                  <div class=""><%=child.Name%></div>
+                                </div>
+                                <div class="text-left font-normal  w-[25%]"><%=child.Unit%></div><div class="text-left font-normal w-[25%]">x<%=child.Qty%></div><div class="text-left font-semibold w-[25%]"><%=child.Total%></div></div>
+                                <% }) %>
+                            </td> 
+                        </tr>
+                       
+                        <% } %>
+
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="md:w-1/4">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4">Report</h2>
+                    <div class="flex justify-between mb-2">
+                        <span>Sales</span>
+                        <span><%=data.sales.length%></span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span>Tables Served</span>
+                        <span><%=tables.length%></span>
+                    </div>
+                    
+                    <hr class="my-2">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Payment Received</span>
+                        <span class="font-semibold"><%=grandTotal%></span>
+                    </div>
+                    <% if(data.sales[0].Status == 'NOTCLEARED'){%>
+                    <form method="POST" action="/sales/clear">
+                      <input type="hidden"  value="<%=data.sales[0].Table%>">
+                      <input type="hidden"  value="<%=data.sales[0].Server%>">
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Clear Sales</button>
+                    </form>
+                    <% } %>
+                    <% if(data.sales[0].Status == 'CLEARED'){%>
+                      <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-lg mt-4 w-full">CLEARED</button>
+                      </form>
+                      <% } %>
+                    <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Print</button>
+                </div>
+        </div>
+    </div>
+
+      <style>
+        td.py-4 {
+          max-width: 90px !important;
+        }
+      </style>
+
+      <%- include('partials/footer') %>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Function to open the modal
+  function openModal() {
+    const modal = document.getElementById("my_modal_5");
+    modal.showModal();
+  }
+
+  // Function to close the modal
+  function closeModal() {
+    const modal = document.getElementById("my_modal_5");
+    modal.close();
+  }
+
+  // Get all table rows
+  const tableRows = document.querySelectorAll("tbody tr");
+
+  // Add event listener to each table row to open modal on click
+  tableRows.forEach((row) => {
+    row.addEventListener("click", openModal);
+  });
+</script>
+
+<script>
+  // Function to combine date and time into a single value
+  function combineDateTime(date, time) {
+    return `${date}T${time}`;
+  }
+
+  // Function to update the combined date and time value and save to local storage
+  function updateCombinedDateTime() {
+    const liveDate = document.getElementById("liveDate").value;
+    const liveTime = document.getElementById("liveTime").value;
+    const combinedDateTime = combineDateTime(liveDate, liveTime);
+    localStorage.setItem("selectedDateTime", combinedDateTime);
+    startInterval();
+  }
+
+  let interval;
+
+  // Function to start the interval to update time in real-time
+  function startInterval() {
+    clearInterval(interval);
+    const liveTimeInput = document.getElementById("liveTime");
+    const selectedTime = liveTimeInput.value;
+    if (!selectedTime) {
+      interval = setInterval(() => {
+        const currentTime = new Date().toISOString().split("T")[1].slice(0, 5);
+        liveTimeInput.value = currentTime;
+      }, 1000);
+    }
+  }
+
+  // Set initial values to current date and time
+  const currentDate = new Date().toISOString().split("T")[0];
+  const currentTime = new Date().toISOString().split("T")[1].slice(0, 5);
+  document.getElementById("liveDate").value = currentDate;
+  document.getElementById("liveTime").value = currentTime;
+
+  // Retrieve and set the stored date and time from local storage, if available
+  const storedDateTime = localStorage.getItem("selectedDateTime");
+  if (storedDateTime) {
+    const storedDate = storedDateTime.split("T")[0];
+    const storedTime = storedDateTime.split("T")[1].slice(0, 5);
+    document.getElementById("liveDate").value = storedDate;
+    document.getElementById("liveTime").value = storedTime;
+    startInterval();
+  }
+
+  // Event listeners to update and save the combined date and time value on input change
+  document
+    .getElementById("liveDate")
+    .addEventListener("input", updateCombinedDateTime);
+  document
+    .getElementById("liveTime")
+    .addEventListener("input", updateCombinedDateTime);
+</script>
+
+<style>
+  /* Input field styles */
+  .input-field {
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    width: 100%;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .input-field:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  }
+
+  /* Button styles */
+  .btn-submit {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    background-color: #6366f1;
+    color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .btn-submit:hover {
+    background-color: #4f46e5;
+  }
+</style>
