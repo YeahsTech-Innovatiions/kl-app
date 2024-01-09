@@ -1,5 +1,5 @@
 @echo off
 echo Starting Node.js server...
-cd /d ".\KL"
+cd /d ".\app"
 start node server.js
 pause
