@@ -41,7 +41,7 @@
       </div>
       <!-- end header -->
       <!-- categories -->
-      <div class="mt-5 flex flex-row px-5">
+      <div class="mt-5 flex flex-row px-5 overflow-scroll">
         <!-- Add an "All" category -->
         <span
           data-category="all"
@@ -63,14 +63,14 @@
 
       <!-- end categories -->
       <!-- products -->
-      <div class="grid grid-cols-3 gap-4 px-5 mt-7 py-5 overflow-y-auto h-3/4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-5 mt-7 py-5 overflow-y-auto h-3/4">
         <% data.products.forEach(function(p) { %>
         <div
           data-id="<%=p.id%>"
           data-name="<%= p.Name %>"
           data-category="<%= p.Category %>"
           data-price="<%= p.Price %>"
-          class="px-3 py-3 flex flex-col border hover:shadow-sm transition-all shadow-md border-gray-200 rounded-md h-32 justify-between product"
+          class="px-3 py-3 flex flex-col border hover:shadow-sm transition-all shadow-md border-gray-200 rounded-md h-auto justify-between product"
         >
           <div class="flex justify-between">
             <div>
