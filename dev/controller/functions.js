@@ -3,9 +3,9 @@ var mysql = require('mysql');
 // connecting Database
 const connection = mysql.createPool({
   host: "127.0.0.1",
-  user: "root",
+  user: "shaey",
   // user: "kladmin",
-  password: "root",
+  password: "",
   database: "kl",
 });
 
@@ -187,11 +187,11 @@ let functions = {
 
       });
     },
-    "getAllSalesData": (callback)=>{
-      let kquery =  functions.get('Sales', {"Cid": "Kitchen"})
-      let bquery =  functions.get('Sales', {"Cid": "Bar"})
-      let gquery =  functions.get('Sales', {"Cid": "Grill"})
-      let pquery =  functions.get('Sales', {"Cid": "Premium"})
+    "getAllSalesData": (callback, filters = null)=>{
+      let kquery =  filters == null? functions.get('Sales', {"Cid": "Kitchen"}) : functions.get('Sales', {"Cid": "Kitchen", ... filters})
+      let bquery =  filters == null? functions.get('Sales', {"Cid": "Bar"}) : functions.get('Sales', {"Cid": "Bar", ... filters})
+      let gquery =  filters == null? functions.get('Sales', {"Cid": "Grill"}) : functions.get('Sales', {"Cid": "Grill", ... filters})
+      let pquery =  filters == null? functions.get('Sales', {"Cid": "Premium"}) : functions.get('Sales', {"Cid": "Premium", ... filters})
       let data = {}
       connection.query(kquery, (err, results) => {
         if (err) {

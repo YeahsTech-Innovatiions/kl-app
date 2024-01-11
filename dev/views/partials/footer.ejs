@@ -3,17 +3,28 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 
-
+<style>
+    table{
+        width:  100% !important;
+        
+    }
+    .dataTables_filter input{
+        max-width: 100px !important;
+    }
+    .paginate_button.next, .paginate_button.previous{
+        display: none !important;
+    }
+</style>
     <!-- Initialize DataTables -->
     <script>
         $(document).ready(function () {
             $('.smart_table').DataTable({
                 "pageLength": 25,
-                "order": [[3, 'desc']],
+                "order": [[1, 'desc']],
                 responsive: true,
-                rowReorder: {
-                    selector: 'td:nth-child(3)'
-                }
+                // rowReorder: {
+                //     selector: 'td:nth-child(2)'
+                // }
             });
               // Add click event to the entire table row
               $('tbody tr').css({"cursor": "pointer"})
@@ -21,7 +32,7 @@
                 // Get the URL from the 'data-href' attribute
                 const url = $(this).data('href');
                 if(url !== undefined){
-                    // window.location.href = url;
+                    window.location.href = url;
                 }
             });
         });

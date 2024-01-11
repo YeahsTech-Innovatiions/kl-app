@@ -200,30 +200,39 @@ router.get("/sales", checkAuth, async (req, res, next) => {
     try {
         let data = {};
         let filters = req.query;
+        let server = req.session.passport.user
+        // res.json(server)
+        if(server.isAdmin == false){
+            filters.Server = server.name
+        }
+
         // filters.Server = authUser.Name
 
         let query = functions.get('Sales', filters)
+        // res.json(req.session.passport.user)
+       
 
-
-        query += `ORDER BY id DESC;`
+        query += ` ORDER BY id DESC`
+        // res.json(query)
 
         function isObjectEmpty(obj) {
             return Object.keys(obj).length === 0;
         }
 
-        if (isObjectEmpty(filters)) {
+        if (isObjectEmpty(filters) || filters.Server !== null) {
             function callback(data) {
                 // res.json(data)
                 data.category = functions.getCategories
-                data.authUser = authUser
+                data.authUser = req.session.passport.user
                 res.render("all_sales", { data: data });
             }
-            functions.getAllSalesData(callback)
+            functions.getAllSalesData(callback, filters)
         } else {
             function callback(data) {
                 console.log(data, 'sql')
                 data.sales = data;
                 data.category = functions.getCategories
+                data.authUser = req.session.passport.user
 
                 res.render("sales", { data: data });
             }
@@ -279,6 +288,7 @@ router.get("/sale", checkAuth, async (req, res, next) => {
             // console.log(data, 'sql')
             data.sales = data;
             data.category = functions.getCategories
+            data.authUser = req.session.passport.user
             res.render("sale", { data: data });
         }
         functions.run(query, callback)

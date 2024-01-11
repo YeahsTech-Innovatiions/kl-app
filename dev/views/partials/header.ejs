@@ -47,7 +47,6 @@
 
     <title>
     Kardelexx Lounge
-
     </title>
     
   </head>
@@ -59,8 +58,26 @@
         display: none;
       }
     }
-
+    <%
+      if(!data.authUser.isAdmin){
+        %>
       .admin-only{
-/*         display: none; */
+        display: none;
       }
+        <%
+      }
+    %>
+    <%
+      if(data.authUser.isAdmin){
+        %>
+      .staffs-only{
+        display: none !important;
+      }
+        <%
+      }
+    %>
+    
+      /* .admin-only{
+        display: none;
+      } */
     </style>

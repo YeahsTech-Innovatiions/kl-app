@@ -135,7 +135,7 @@
                         <span class="font-semibold">Payment Received</span>
                         <span class="font-semibold"><%=grandTotal%></span>
                     </div>
-                    <% if(data.sales[0].Status == 'NOTCLEARED'){%>
+                    <% if(data.sales[0].Status == 'NOTCLEARED' && data.authUser.isAdmin){%>
                     <form method="POST" action="/sales/clear">
                       <input type="hidden"  value="<%=data.sales[0].Table%>">
                       <input type="hidden"  value="<%=data.sales[0].Server%>">
