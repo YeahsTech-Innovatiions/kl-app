@@ -9,7 +9,11 @@
         $(document).ready(function () {
             $('.smart_table').DataTable({
                 "pageLength": 25,
-                "order": [[3, 'desc']]
+                "order": [[3, 'desc']],
+                responsive: true,
+                rowReorder: {
+                    selector: 'td:nth-child(3)'
+                }
             });
               // Add click event to the entire table row
               $('tbody tr').css({"cursor": "pointer"})
@@ -17,7 +21,7 @@
                 // Get the URL from the 'data-href' attribute
                 const url = $(this).data('href');
                 if(url !== undefined){
-                    window.location.href = url;
+                    // window.location.href = url;
                 }
             });
         });
