@@ -3,9 +3,9 @@ var mysql = require('mysql');
 // connecting Database
 const connection = mysql.createPool({
   host: "127.0.0.1",
-  user: "shaey",
+  user: "root",
   // user: "kladmin",
-  password: "",
+  password: "root",
   database: "kl",
 });
 

@@ -1,12 +1,28 @@
 const express = require("express");
 const ErrorHandler = require("./middleware/error");
 const app = express();
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const passport = require('passport');
+const session = require('express-session');
+
+var SQLiteStore = require('connect-sqlite3')(session);
+
+// Configure express-session middleware
+app.use(
+  session({
+    secret: 'kl', // Replace with a secure secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Set to true if your application is served over HTTPS
+    store: new SQLiteStore({ db: 'sessions.db', dir: './db' })
+  })
+);
+app.use(passport.authenticate('session'));
 
 app.use(express.json());
-app.use(cookieParser());
+// app.use(cookieParser());
 app.set("view engine", "ejs");
 const path = require('path');
 
