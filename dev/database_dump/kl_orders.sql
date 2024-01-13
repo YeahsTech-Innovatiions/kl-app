@@ -24,13 +24,13 @@ DROP TABLE IF EXISTS `orders`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `saleslog` json DEFAULT NULL,
+  `saleslog` text DEFAULT NULL,
   `Sid` text,
-  `Categories` json DEFAULT NULL,
-  `products` json DEFAULT NULL,
+  `Categories` text DEFAULT NULL,
+  `products` text DEFAULT NULL,
   `date_created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

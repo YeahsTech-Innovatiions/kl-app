@@ -2,11 +2,11 @@ var mysql = require('mysql');
 
 // connecting Database
 const connection = mysql.createPool({
-  host: "127.0.0.1",
-  user: "shaey",
+  host: "sql11.freemysqlhosting.net",
+  user: "sql11676482",
   // user: "kladmin",
-  password: "",
-  database: "kl",
+  password: "up7YWNCQPx",
+  database: "sql11676482",
 });
 
 
