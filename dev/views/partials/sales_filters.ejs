@@ -3,7 +3,7 @@
       <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
       
           <div class="flex flex-row justify-between gap-3 items-center">
-          <div class="font-bold text-gray-800">All</div>
+          <div class="font-bold text-gray-800">All</div> <span class="font-bold"><%=data.bar_sales.length + data.kitchen_sales.length + data.grill_sales.length%></span>
           <a href="/app/sales">
             <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
               View
@@ -15,7 +15,7 @@
       <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
       
         <div class="flex flex-row justify-between gap-3 items-center">
-        <div class="font-bold text-gray-800">Kitchen</div>
+        <div class="font-bold text-gray-800">Kitchen</div> <span class="font-bold"><%=data.kitchen_sales.length%></span>
 
           <a href="/app/sales?`Cid`=Kitchen">
             <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
@@ -28,7 +28,7 @@
     <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
       
       <div class="flex flex-row justify-between gap-3 items-center">
-      <div class="font-bold text-gray-800">Bar</div>
+      <div class="font-bold text-gray-800">Bar</div> <span class="font-bold"><%=data.bar_sales.length%></span>
 
       <a href="/app/sales?`Cid`=Bar">
         <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
@@ -41,7 +41,7 @@
   <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
       
     <div class="flex flex-row justify-between gap-3 items-center">
-    <div class="font-bold text-gray-800">Grills</div>
+    <div class="font-bold text-gray-800">Grills</div> <span class="font-bold"><%=data.grill_sales.length%></span>
 
     <a href="/app/sales?`Cid`=Grill">
       <button class="w-14 object-cover rounded-md btn btn-default text-[#1d9bf0]" alt="">
@@ -50,7 +50,7 @@
     </a>
     </div>
 </div>
-
+<!-- 
 <div class="px-3 py-3 flex flex-col border border-gray-200 shadow-sm  w-full rounded-md justify-between">
       
   <div class="flex flex-row justify-between gap-3 items-center">
@@ -62,7 +62,7 @@
   </button>
   </a>
   </div>
-</div>
+</div> -->
 
     </div>
       <div class="flex items-center justify-between gap-2">

@@ -173,7 +173,7 @@ let functions = {
       },
     }
     },
-    "getCategories":[{"Name": "Bar"}, { "Name": "Kitchen"}, {  "Name": "Grill"}, {  "Name": "Premium"}],
+    "getCategories":[{"Name": "Bar"}, { "Name": "Kitchen"}, {  "Name": "Grill"}],
     "salesStock":(sale)=>{
       console.log(sale, 'Sale!')
       const query = `UPDATE Products SET Stock = Stock - ${sale.Qty} WHERE id = ${sale.Pid};`;
@@ -188,10 +188,12 @@ let functions = {
       });
     },
     "getAllSalesData": (callback, filters = null)=>{
+      // filters.date_created  " > NOW() "
       let kquery =  filters == null? functions.get('Sales', {"Cid": "Kitchen"}) : functions.get('Sales', {"Cid": "Kitchen", ... filters})
       let bquery =  filters == null? functions.get('Sales', {"Cid": "Bar"}) : functions.get('Sales', {"Cid": "Bar", ... filters})
       let gquery =  filters == null? functions.get('Sales', {"Cid": "Grill"}) : functions.get('Sales', {"Cid": "Grill", ... filters})
       let pquery =  filters == null? functions.get('Sales', {"Cid": "Premium"}) : functions.get('Sales', {"Cid": "Premium", ... filters})
+
       let data = {}
       connection.query(kquery, (err, results) => {
         if (err) {
