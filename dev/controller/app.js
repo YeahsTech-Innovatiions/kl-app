@@ -212,7 +212,8 @@ router.get("/sales", checkAuth, async (req, res, next) => {
         // res.json(req.session.passport.user)
        
 
-        query += ` ORDER BY id DESC`
+        // query += `ORDER BY date_created DESC`
+        // query += ` ORDER BY id DESC ORDER BY timestamp_column DESC`
         // res.json(query)
 
         function isObjectEmpty(obj) {

@@ -27,7 +27,10 @@ let functions = {
       const columnsToSelect = ['id', 'Name', 'Price'];
 
       const whereClause = Object.entries(filters).map(([key, value]) =>`${key} = '${value}'`).join(' AND ');
-      const query = `SELECT * FROM ${tableName} ${whereClause ? `WHERE ${whereClause}` : ''}`;
+      let query = `SELECT * FROM ${tableName} ${whereClause ? `WHERE ${whereClause}` : ''}`;
+      if(table == 'Sales'){
+      query += 'ORDER BY date_created DESC'
+    }
         console.log(filters)
       // Perform the SELECT query
       return query
