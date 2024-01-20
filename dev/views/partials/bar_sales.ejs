@@ -33,7 +33,12 @@
                             </div>
                         </td>
                         <td class="py-4 amount"><%=s.Total%></td>
-                        <td class="py-4 "><%=s.Table%> <br> <%= s.date_created.toLocaleDateString('en-US',{ weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })%><br> <%=s.Server%> <%=s.Status%> </td>
+                        <td class="py-4 "><%=s.Table%> <br> <%= s.date_created.toLocaleDateString('en-US',{ weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })%><br> <%=s.Server%> 
+                               <span style="color: <%= s.Status == 'CLEARED' ? 'green': 'red'  %>">
+                                <%=s.Status%> 
+                               </span> 
+                        
+                        </td>
                         </tr>
                    
                     <% }) %>
@@ -53,14 +58,14 @@
                 
                 <div class="flex justify-between mb-2">
                     <span>Sales</span>
-                    <span><%=data.bar_sales.length%></span>
+                    <span  class="ml-4 font-bold"><%=data.bar_sales.length%></span>
                 </div>
                 
                 
                 <hr class="my-2">
                 <div class="flex justify-between mb-2">
                     <span class="font-semibold">Payment Received</span>
-                    <span><%=totalItemSales%></span>
+                    <span  class="ml-4 font-bold"><%=totalItemSales%></span>
                 </div>
                 <button onclick="printPage()" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-0 w-35">Print</button>
             </div>

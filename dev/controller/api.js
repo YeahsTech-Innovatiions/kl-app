@@ -48,31 +48,32 @@ router.get("/:endpoint", async (req, res) => {
 });
 
 router.post("/product/add", async (req, res) => {
-  let table = 'products'
+  let table = 'Products'
   let filter = {}
   let data = req.body
   // data.id = Date.now()
   console.log(data)
   let query =  functions.insert(table, data, filter)
 
-  function callback (data){ res.json(data)}
+  function callback (data){ res.redirect('/app/products')}
   functions.run(query, callback)
 });
 
 router.post("/product/edit", async (req, res) => {
-  let table = 'products'
+  let table = 'Products'
   let filter = req.query
   let data = req.body
   // data.id = 
   let query =  functions.update(table, data, filter)
   console.log(query)
 
-  function callback (data){ res.json(data)}
+  function callback (data){ res.redirect('/app/products')}
+  // function callback (data){ res.json(data)}
   functions.run(query, callback)
 });
 
 router.post("/sales/add", async (req, res) => {
-  let table = 'sales'
+  let table = 'Sales'
   let filter = req.query
   let data = req.body
   // data.id = Math.random()
@@ -81,45 +82,55 @@ router.post("/sales/add", async (req, res) => {
 
   function callback (respdata){ 
     functions.salesStock(data)
-    res.json(respdata)
+    // res.json(respdata)
+    res.redirect('/app/staffs')
   }
   functions.run(query, callback)
 });
 
 router.post("/sales/edit", async (req, res) => {
-  let table = 'sales'
+  let table = 'Sales'
   let filter = req.query
   let data = req.body
   // data.id = 
   console.log(data)
   let query =  functions.update(table, data, filter)
 
-  function callback (data){ res.json(data)}
+  function callback (data){
+    res.redirect('/app/sales')
+    
+  }
   functions.run(query, callback)
 });
 
 
 router.post("/staffs/add", async (req, res) => {
-  let table = 'staffs'
+  let table = 'Staffs'
   let filter = req.query
   let data = req.body
   // data.id = Math.random()
   console.log(data)
   let query =  functions.insert(table, data, filter)
 
-  function callback (data){ res.json(data)}
+  function callback (data){ 
+    res.redirect('/app/staffs')
+    
+  }
   functions.run(query, callback)
 });
 
 router.post("/staffs/edit", async (req, res) => {
-  let table = 'staffs'
+  let table = 'Staffs'
   let filter = req.query
   let data = req.body
   // data.id = 
   console.log(data)
   let query =  functions.update(table, data, filter)
 
-  function callback (data){ res.json(data)}
+  function callback (data){ 
+    res.redirect('/app/staffs')
+
+  }
   functions.run(query, callback)
 });
 
